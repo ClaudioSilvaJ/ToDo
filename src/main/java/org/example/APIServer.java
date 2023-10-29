@@ -2,6 +2,7 @@ package org.example;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.servlet.ServletContainer;
 
 public class APIServer {
     public static void main(String[] args) throws Exception {
@@ -11,14 +12,15 @@ public class APIServer {
         context.setContextPath("/");
         server.setHandler(context);
 
+        // Jersey Jax-RS
+        ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/api/*");
+        jerseyServlet.setInitOrder(0);
+        jerseyServlet.setInitParameter("jersey.config.server.provider.packages", "org.example");
 
-        // Registre seu servlet
-        context.addServlet(new ServletHolder(new MyAPIServlet()), "/api/*");
-
+        //Cors Filter
         context.addFilter(CorsFilter.class, "/*", null);
 
         server.start();
         server.join();
     }
 }
-
