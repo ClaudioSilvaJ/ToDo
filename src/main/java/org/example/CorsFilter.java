@@ -15,10 +15,10 @@ import java.io.IOException;
 public class CorsFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws IOException, ServletException {
-        // Converta ServletResponse em HttpServletResponse
+        // Converte ServletResponse em HttpServletResponse
         HttpServletResponse response = (HttpServletResponse) res;
 
-        // Configurar os cabeçalhos CORS para permitir solicitações de qualquer origem (isso pode ser restrito em produção)
+        // Configurar os cabeçalhos CORS para permitir solicitações de qualquer origem
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
