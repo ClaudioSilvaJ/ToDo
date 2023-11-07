@@ -5,6 +5,7 @@ async function LoginService(email, password) {
         email: email,
         password: password,
     };
+    console.log(loginData)
 
     try {
         const response = await axios.post('http://localhost:8231/api/auth/login', loginData, {
@@ -12,6 +13,7 @@ async function LoginService(email, password) {
                 'Content-Type': 'application/json',
             },
         });
+        console.log(response)
 
         if (response.status === 200) {
             console.log('Login bem-sucedido');

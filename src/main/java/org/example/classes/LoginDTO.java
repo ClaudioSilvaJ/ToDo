@@ -9,6 +9,7 @@ public class LoginDTO {
     private String id;
     private String email;
     private String password;
+    private byte[] salt;
 
     @SuppressWarnings("unused")
     public LoginDTO() { }
@@ -34,6 +35,11 @@ public class LoginDTO {
     	return password;
     }
 
+    public byte[] getSalt() {
+    	return salt;
+    }
 
-
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+    }
 }

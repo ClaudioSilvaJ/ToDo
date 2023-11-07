@@ -7,6 +7,8 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
 public class APIServer {
@@ -27,16 +29,27 @@ public class APIServer {
 
         //Morphia MongoDB
         Datastore datastore = new MorphiaConfig().getDatastore();
+        testhash();
         //criaAdmin(datastore);
 
         server.start();
         server.join();
     }
 
-    public static void criaAdmin(Datastore datastore){
+    public static void testhash() throws NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] salt = PasswordHashing.generateSalt();
+        System.out.println(salt);
+        String password = "admin";
+        String hash = PasswordHashing.hashPassword(password, salt);
+        System.out.println(hash);
+        System.out.println(PasswordHashing.checkPassword(password, salt, hash));
+    }
+
+    public static void criaAdmin(Datastore datastore) throws NoSuchAlgorithmException, InvalidKeySpecException {
         LoginDTO login1 = new LoginDTO();
         login1.setEmail("admin");
-        login1.setPassword("admin");
+        login1.setSalt(PasswordHashing.generateSalt());
+        login1.setPassword(PasswordHashing.hashPassword("admin", login1.getSalt()));
         datastore.save(login1);
         procura(datastore, login1);
     }

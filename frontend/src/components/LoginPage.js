@@ -3,12 +3,19 @@ import LoginService from "../services/LoginService";
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import {FcGoogle} from "react-icons/fc";
-import {AiOutlineGoogle, AiFillGithub, AiFillFacebook, AiFillLinkedin} from "react-icons/ai";
+import {
+  AiOutlineGoogle,
+  AiFillGithub,
+  AiFillFacebook,
+  AiFillLinkedin,
+  AiOutlineEyeInvisible, AiOutlineEye
+} from "react-icons/ai";
 
 function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
     const responseLogin = await LoginService(username, password);
@@ -31,7 +38,7 @@ function LoginPage() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" method="POST">
             <div className="mt-2 relative">
               <input
                 placeholder="Username"
@@ -39,6 +46,7 @@ function LoginPage() {
                 name="email"
                 type="email"
                 autoComplete="email"
+                onChange={(e) => setUsername(e.target.value)}
                 required
                 className="block w-full bg-gray-200 rounded-2xl border-0 py-2 pl-9 pr-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-700 sm:text-md sm:leading-9"
               />
@@ -52,14 +60,24 @@ function LoginPage() {
                 placeholder="Password"
                 id="password"
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="block w-full bg-gray-200 rounded-2xl border-0 py-2 pl-9 pr-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-700 sm:text-md sm:leading-9"
               />
               <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
                 <HttpsOutlinedIcon className="h-5 w-5 text-gray-800" />
               </div>
+              <button
+                type="button"
+                onClick = {() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                style={{fontSize: "1.2rem"}}
+              >
+                {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+
+              </button>
             </div>
 
             <div className="mt-2">
