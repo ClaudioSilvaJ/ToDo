@@ -80,7 +80,7 @@ function LoginPage() {
             <div className="mt-2">
               <button
                 onClick={handleLogin}
-                className="w-full bg-gray-500 text-white rounded-2xl py-4 text-sm font-bold shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                className="w-full bg-emerald-600 text-white rounded-2xl py-4 text-sm font-bold shadow-sm hover:bg-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
               >
                 LOGIN
               </button>
