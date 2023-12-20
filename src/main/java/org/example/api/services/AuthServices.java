@@ -21,8 +21,6 @@ public class AuthServices {
     @Consumes("application/json; charset=UTF-8")
     @Produces("application/json; charset=UTF-8")
     public Response login(final LoginDTO userTryDTO) {
-        System.out.println(userTryDTO.getEmail());
-        System.out.println(userTryDTO.getPassword());
         if (userTryDTO == null) {
             return Response.status(Response.Status.UNAUTHORIZED).entity("Please enter your login details!").build();
         }
@@ -32,8 +30,7 @@ public class AuthServices {
             if(user == null){ return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid login").build();}
             if(PasswordHashing.checkPassword(userTryDTO.getPassword(), user.getSalt(), user.getPassword())){
                 TokenDTO token = keyGenerator.generatorToken(userTryDTO.getEmail());
-                System.out.println(token);
-                datastore.save(token.getToken());
+                datastore.save(token);
                 return Response.ok(token.getToken()).build();
             }
 

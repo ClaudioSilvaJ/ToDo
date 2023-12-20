@@ -15,6 +15,7 @@ public class LoginDTO {
     @SuppressWarnings("unused")
     public LoginDTO() { }
 
+    @SuppressWarnings("unused")
     public LoginDTO(String email, String password) {
         this.email = email;
         this.password = password;

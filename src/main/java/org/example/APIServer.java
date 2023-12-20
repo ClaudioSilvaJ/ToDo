@@ -33,7 +33,7 @@ public class APIServer {
         //Morphia MongoDB
         Datastore datastore = new MorphiaConfig().getDatastore();
         testhash();
-        //criaAdmin(datastore);
+        criaAdmin(datastore);
 
         server.start();
         server.join();

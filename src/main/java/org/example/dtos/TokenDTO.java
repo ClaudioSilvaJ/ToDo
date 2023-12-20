@@ -12,10 +12,8 @@ public class TokenDTO {
     private Date creationDate;
     private Date expirationDate;
 
-    @SuppressWarnings("Unused")
-    public TokenDTO(){
-
-    }
+    @SuppressWarnings("unused")
+    public TokenDTO(){ }
 
     public TokenDTO(String token, Date creationDate, Date expirationDate){
         this.token = token;
@@ -27,10 +25,12 @@ public class TokenDTO {
         return token;
     }
 
+    @SuppressWarnings("unused")
     public Date getCreationDate(){
         return creationDate;
     }
 
+    @SuppressWarnings("unused")
     public Date getExpirationDate(){
         return expirationDate;
     }
