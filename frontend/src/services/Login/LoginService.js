@@ -1,10 +1,12 @@
 import axios from 'axios';
 
+import { withRouter } from 'react-router';
 async function LoginService(email, password) {
     const loginData = {
         email: email,
         password: password,
     };
+
     console.log(loginData)
 
     try {
@@ -13,9 +15,10 @@ async function LoginService(email, password) {
                 'Content-Type': 'application/json',
             },
         });
-        console.log(response)
+        localStorage.setItem("token", response.data)
 
         if (response.status === 200) {
+            window.location.href = "/user/dashboard"; //Todo - Resolver isso
             console.log('Login bem-sucedido');
         } else {
             console.log('Falha no login');

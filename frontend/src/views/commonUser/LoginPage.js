@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import LoginService from "../../services/Login/LoginService";
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import {FcGoogle} from "react-icons/fc";
+import isLogin from "../../isLogin";
 import {
   AiFillGithub,
   AiOutlineEyeInvisible, AiOutlineEye
@@ -21,6 +22,12 @@ function LoginPage() {
       setLoggedIn(true);
     }
   };
+
+  useEffect(()=> {
+    if (!isLogin()){
+      window.location.href = "/user/dashboard";
+    }
+  })
 
   return (
     <div className="flex flex-row justify-center items-center h-screen font-oswald">
