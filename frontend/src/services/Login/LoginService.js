@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-import { withRouter } from 'react-router';
 async function LoginService(email, password) {
     const loginData = {
         email: email,

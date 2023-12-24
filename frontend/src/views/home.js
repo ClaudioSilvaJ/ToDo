@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function Home() {
   const redirect = () => {
@@ -19,8 +19,6 @@ function Home() {
           Login
         </button>
       </div>
-
-
     </div>
   );
 }

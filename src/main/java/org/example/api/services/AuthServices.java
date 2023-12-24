@@ -1,5 +1,4 @@
 package org.example.api.services;
-import com.mongodb.util.JSON;
 import org.example.dtos.TokenDTO;
 import org.example.functions.PasswordHashing;
 import org.example.configs.MorphiaConfig;
@@ -35,7 +34,6 @@ public class AuthServices {
             if (PasswordHashing.checkPassword(userTryDTO.getPassword(), user.getSalt(), user.getPassword())) {
                 TokenDTO token = keyGenerator.generatorToken(userTryDTO.getEmail());
                 datastore.save(token);
-                System.out.println("token:" + token.getToken());
                 return Response.ok(token.getToken()).build();
             } else {
                 return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid login").build();
@@ -47,16 +45,13 @@ public class AuthServices {
     }
 
     @POST
-    @Path("/dashboard")
+    @Path("/token-verify")
     @Consumes ("application/json; charset=UTF-8")
     @Produces ("application/json; charset=UTF-8")
     public Response expirationCheck(TokenDTO token){
-        System.out.println(token.getToken());
         Date currentTime = new Date();
         Query<TokenDTO> query = datastore.createQuery(TokenDTO.class).field("token").equal(token.getToken());
         TokenDTO tokenInfos = query.get();
-        System.out.println(currentTime);
-        System.out.println(tokenInfos.getExpirationDate());
         if (tokenInfos == null){
             return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid token").build();
         }

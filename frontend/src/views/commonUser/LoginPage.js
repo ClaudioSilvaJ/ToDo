@@ -1,32 +1,37 @@
 import React, {useEffect, useState} from 'react';
-import LoginService from "../../services/Login/LoginService";
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import {FcGoogle} from "react-icons/fc";
-import isLogin from "../../isLogin";
 import {
   AiFillGithub,
   AiOutlineEyeInvisible, AiOutlineEye
 } from "react-icons/ai";
+import LoginService
+  from "../../services/Login/LoginService";
+import TokenVerify from "../../services/Token/TokenVerify";
 
 function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
-    const responseLogin = await LoginService(username, password);
-    //Temp Auth
-    if(responseLogin.status === 200) {
-      setLoggedIn(true);
+    if(username === '' || password === ''){
+      alert("Please fill in all fields");
+    } else {
+      await LoginService(username, password);
     }
   };
 
   useEffect(()=> {
-    if (!isLogin()){
-      window.location.href = "/user/dashboard";
+    async function tokenValidated() {
+      return await TokenVerify();
     }
+    tokenValidated().then(result => {
+      if(result){
+        window.location.href = "/user/dashboard";
+      }
+    });
   })
 
   return (
@@ -118,7 +123,7 @@ function LoginPage() {
           </div>
           <div className="flex flex-row justify-center items-center pt-4">
             <button
-              className="w-full flex text-black rounded-2xl py-2 mr-3 text-sm font-semibold text-sm shadow-sm border-2 border-gray-800 hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
+              className="w-full flex text-black rounded-2xl py-2 mr-3 font-semibold text-sm shadow-sm border-2 border-gray-800 hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
               <img
                 className="icon"
                 alt="..."
