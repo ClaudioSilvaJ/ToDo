@@ -11,7 +11,7 @@ import {
 import Home from "./views/home";
 import LoginPage from "./views/commonUser/LoginPage";
 import ContactUs from "./views/commonUser/contactUs";
-import Users from "./routes/Users";
+import Users from "./Routes/Users";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
