@@ -23,9 +23,15 @@ function LoginPage() {
     }
   };
 
-  useEffect(()=> {
-    if (!isLogin()){
-      window.location.href = "/user/dashboard";
+  const isLogged = async () => {
+    setLoggedIn(!!(await isLogin()))
+  }
+
+  useEffect( ()=> {
+    if (loggedIn === true){
+      window.location.href = "/user/dashboard"
+    } else {
+      isLogged()
     }
   })
 

@@ -51,19 +51,18 @@ public class AuthServices {
     @Consumes ("application/json; charset=UTF-8")
     @Produces ("application/json; charset=UTF-8")
     public Response expirationCheck(TokenDTO token){
-        System.out.println(token.getToken());
         Date currentTime = new Date();
         Query<TokenDTO> query = datastore.createQuery(TokenDTO.class).field("token").equal(token.getToken());
         TokenDTO tokenInfos = query.get();
-        System.out.println(currentTime);
-        System.out.println(tokenInfos.getExpirationDate());
         if (tokenInfos == null){
             return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid token").build();
         }
         if (currentTime.compareTo(tokenInfos.getExpirationDate()) < 0){
+            System.out.println("teste1");
             return Response.status(Response.Status.OK).entity("Valid token").build();
         }
         else {
+            System.out.println("teste3");
             return Response.status(Response.Status.UNAUTHORIZED).entity("Expired token").build();
         }
     }
