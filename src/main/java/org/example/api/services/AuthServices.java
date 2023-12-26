@@ -6,6 +6,9 @@ import org.example.dtos.LoginDTO;
 import org.example.configs.TokenGenerator;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
 
 import javax.ws.rs.*;
@@ -62,6 +65,21 @@ public class AuthServices {
         else {
             System.out.println("teste3");
             return Response.status(Response.Status.UNAUTHORIZED).entity("Expired token").build();
+        }
+    }
+
+    @POST
+    @Path ("/register")
+    @Consumes ("application/json; charset=UTF-8")
+    @Produces ("application/json; charset=UTF-8")
+    public Response register(LoginDTO user){
+        try {
+            user.setSalt(PasswordHashing.generateSalt());
+            user.setPassword(PasswordHashing.hashPassword(user.getPassword(), user.getSalt()));
+            datastore.save(user);
+            return Response.status(Response.Status.OK).entity("Register success").build();
+        } catch (Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Register error").build();
         }
     }
 }
