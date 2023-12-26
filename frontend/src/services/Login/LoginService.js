@@ -17,7 +17,6 @@ async function LoginService(email, password) {
         localStorage.setItem("token", response.data)
 
         if (response.status === 200) {
-            window.location.href = "/user/dashboard"; //Todo - Resolver isso
             console.log('Login bem-sucedido');
         } else {
             console.log('Falha no login');
