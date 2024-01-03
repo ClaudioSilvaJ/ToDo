@@ -6,6 +6,7 @@ import org.mongodb.morphia.annotations.Id;
 @Entity("logindata")
 public class LoginDTO {
 
+    @SuppressWarnings("unused")
     @Id
     private String id;
     private String email;

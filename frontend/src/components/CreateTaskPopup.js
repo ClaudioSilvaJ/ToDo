@@ -14,12 +14,10 @@ function CreateTaskPopup({ onClose, onTaskCreate, onTaskSelected={name: "", stat
         onClose();
     }
 
-
-
     return (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-40">
             <div className="bg-white p-8 shadow-md rounded-md w-4/12">
-                <h2 className="text-lg font-bold mb-4">Nova Tarefa</h2>
+                <h2 className="text-lg font-bold mb-4">{onTaskSelected.name === "" ? "Nova Tarefa" : "Editar Tarefa"}</h2>
                 <label className="block mb-2">Nome:</label>
                 <input
                     type="text"
