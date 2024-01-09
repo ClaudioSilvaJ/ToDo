@@ -5,7 +5,7 @@ import org.mongodb.morphia.Morphia;
 import com.mongodb.MongoClient;
 
 public class MorphiaConfig {
-    private Datastore datastore;
+    final Datastore datastore;
 
     public MorphiaConfig() {
         MongoClient mongoClient = new MongoClient("localhost", 27037);

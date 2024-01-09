@@ -6,9 +6,6 @@ import org.example.dtos.LoginDTO;
 import org.example.configs.TokenGenerator;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
-
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
 
 import javax.ws.rs.*;
@@ -59,11 +56,9 @@ public class AuthServices {
             return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid token").build();
         }
         if (currentTime.compareTo(tokenInfos.getExpirationDate()) < 0){
-            System.out.println("teste1");
             return Response.status(Response.Status.OK).entity("Valid token").build();
         }
         else {
-            System.out.println("teste3");
             return Response.status(Response.Status.UNAUTHORIZED).entity("Expired token").build();
         }
     }

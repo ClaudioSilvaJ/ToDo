@@ -4,7 +4,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.example.dtos.LoginDTO;
 import org.example.configs.CorsFilter;
-import org.example.configs.MorphiaConfig;
+//import org.example.configs.MorphiaConfig;
 import org.example.functions.PasswordHashing;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.mongodb.morphia.Datastore;
@@ -31,23 +31,23 @@ public class APIServer {
         context.addFilter(CorsFilter.class, "/*", null);
 
         //Morphia MongoDB
-        Datastore datastore = new MorphiaConfig().getDatastore();
-        testhash();
+        //Datastore datastore = new MorphiaConfig().getDatastore();
+        //testhash();
         //criaAdmin(datastore);
 
         server.start();
         server.join();
     }
-
+    @SuppressWarnings("unused")
     public static void testhash() throws NoSuchAlgorithmException, InvalidKeySpecException {
         byte[] salt = PasswordHashing.generateSalt();
-        System.out.println(salt);
         String password = "admin";
         String hash = PasswordHashing.hashPassword(password, salt);
         System.out.println(hash);
         System.out.println(PasswordHashing.checkPassword(password, salt, hash));
     }
 
+    @SuppressWarnings("unused")
     public static void criaAdmin(Datastore datastore) throws NoSuchAlgorithmException, InvalidKeySpecException {
         LoginDTO login1 = new LoginDTO();
         login1.setEmail("admin");
@@ -60,6 +60,7 @@ public class APIServer {
     public static void procura(Datastore datastore, LoginDTO login){
         Query<LoginDTO> query = datastore.createQuery(LoginDTO.class);
         query.field("email").equal("admin");
+        System.out.println(login);
         List<LoginDTO> resultados = query.asList();
         if (!resultados.isEmpty()) {
             System.out.println("Encontrado: O valor existe no campo 'campo1' em algum documento.");
