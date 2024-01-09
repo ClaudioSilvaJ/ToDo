@@ -4,7 +4,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 @Entity("tasks")
-public class TaskDTO {
+public class    TaskDTO {
     @SuppressWarnings("unused")
     @Id
     private String id;
