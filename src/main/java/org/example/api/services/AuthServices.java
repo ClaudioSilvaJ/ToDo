@@ -17,6 +17,30 @@ public class AuthServices {
     TokenGenerator keyGenerator = new TokenGenerator();
     Datastore datastore = new MorphiaConfig().getDatastore();
 
+    @GET
+    @Path("/current")
+    @Produces("application/json; charset=UTF-8")
+    public Response getCurrentUser(@HeaderParam("Authorization") String token) {
+        try {
+            Query<TokenDTO> query = datastore.createQuery(TokenDTO.class).field("token").equal(token);
+            TokenDTO tokenInfos = query.get();
+            if (tokenInfos == null){
+                return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid token").build();
+            }
+            if (tokenInfos.getExpirationDate().compareTo(new Date()) < 0){
+                return Response.status(Response.Status.UNAUTHORIZED).entity("Expired token").build();
+            }
+            Query<LoginDTO> queryUser = datastore.createQuery(LoginDTO.class).field("email").equal(tokenInfos.getEmail());
+            LoginDTO user = queryUser.get();
+            if (user == null){
+                return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid token").build();
+            }
+            return Response.ok(user).build();
+        } catch (Exception e){
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid token").build();
+        }
+    }
+
     @POST
     @Path("/login")
     @Consumes("application/json; charset=UTF-8")
@@ -40,8 +64,10 @@ public class AuthServices {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();  // Adicione esta linha para registrar a exceção no console
             return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Invalid login").build();
         }
+
     }
 
     @POST
@@ -77,4 +103,6 @@ public class AuthServices {
             return Response.status(Response.Status.BAD_REQUEST).entity("Register error").build();
         }
     }
+
+
 }

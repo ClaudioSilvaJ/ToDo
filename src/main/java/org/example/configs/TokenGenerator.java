@@ -18,6 +18,6 @@ public class TokenGenerator {
                         .signWith(SignatureAlgorithm.HS256, email)
                         .compact();
 
-                return new TokenDTO(jwtToken, now, expiration);
+                return new TokenDTO(jwtToken, now, expiration, email);
     }
 }
