@@ -12,6 +12,7 @@ public class    TaskDTO {
 
     private State state;
     private String obs;
+    private String owner;
 
 
 
@@ -19,10 +20,11 @@ public class    TaskDTO {
     public TaskDTO() { }
 
     @SuppressWarnings("unused")
-    public TaskDTO(String name, String obs, State state) {
+    public TaskDTO(String name, String obs, State state, String owner) {
         this.name = name;
         this.obs = obs;
         this.state = state;
+        this.owner = owner;
     }
 
 
@@ -61,5 +63,15 @@ public class    TaskDTO {
     @SuppressWarnings("unused")
     public void setObs(String obs) {
         this.obs = obs;
+    }
+
+    @SuppressWarnings("unused")
+    public String getOwner() {
+        return owner;
+    }
+
+    @SuppressWarnings("unused")
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }
