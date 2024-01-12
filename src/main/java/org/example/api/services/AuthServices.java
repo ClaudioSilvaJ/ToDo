@@ -1,7 +1,7 @@
 package org.example.api.services;
+import org.example.APIServer;
 import org.example.dtos.TokenDTO;
 import org.example.functions.PasswordHashing;
-import org.example.configs.MorphiaConfig;
 import org.example.dtos.LoginDTO;
 import org.example.configs.TokenGenerator;
 import org.mongodb.morphia.Datastore;
@@ -12,10 +12,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 @Path("/auth")
-public class AuthServices {
+public class AuthServices extends APIServer {
 
     TokenGenerator keyGenerator = new TokenGenerator();
-    Datastore datastore = new MorphiaConfig().getDatastore();
 
     @GET
     @Path("/current")
@@ -62,9 +61,7 @@ public class AuthServices {
             } else {
                 return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid login").build();
             }
-
         } catch (Exception e) {
-            e.printStackTrace();  // Adicione esta linha para registrar a exceção no console
             return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Invalid login").build();
         }
 
@@ -104,5 +101,8 @@ public class AuthServices {
         }
     }
 
+    public void setDatastore(Datastore datastore) {
+        APIServer.datastore = datastore;
+    }
 
 }

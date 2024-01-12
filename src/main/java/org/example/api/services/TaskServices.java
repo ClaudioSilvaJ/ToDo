@@ -1,7 +1,6 @@
 package org.example.api.services;
+import org.example.APIServer;
 import org.example.dtos.TaskDTO;
-import org.example.configs.MorphiaConfig;
-import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
@@ -11,8 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Path("/user")
-public class TaskServices {
-    Datastore datastore = new MorphiaConfig().getDatastore();
+public class TaskServices extends APIServer {
     @POST
     @Path("/task")
     @Consumes("application/json; charset=UTF-8")
