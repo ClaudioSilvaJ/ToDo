@@ -1,7 +1,6 @@
 package org.example.api.services;
+import org.example.APIServer;
 import org.example.dtos.TaskDTO;
-import org.example.configs.MorphiaConfig;
-import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
@@ -11,12 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Path("/user")
-public class TaskServices {
-    Datastore datastore = new MorphiaConfig().getDatastore();
+public class TaskServices extends APIServer {
     @POST
     @Path("/task")
     @Consumes("application/json; charset=UTF-8")
-    public Response CreateTask(TaskDTO newTask){
+    public Response createTask(TaskDTO newTask){
         try {
             datastore.save(newTask);
             return Response.status(Response.Status.CREATED).build();
@@ -28,7 +26,7 @@ public class TaskServices {
     @PUT
     @Path("/task")
     @Consumes("application/json; charset=UTF-8")
-    public Response UpdateTask(TaskDTO newDatesTask){
+    public Response updateTask(TaskDTO newDatesTask){
         try {
             Query<TaskDTO> query =
                     datastore.createQuery(TaskDTO.class)
@@ -71,5 +69,4 @@ public class TaskServices {
         if(!tasks.isEmpty()) return Response.status(Response.Status.OK).entity(tasks).build();
         return Response.status(Response.Status.NOT_FOUND).entity(tasks).build();
     }
-
 }
