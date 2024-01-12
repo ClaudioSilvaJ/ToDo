@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Entity("tokenInfo")
 public class TokenDTO {
+    @SuppressWarnings("unused")
     @Id
     private String id;
     private String token;
