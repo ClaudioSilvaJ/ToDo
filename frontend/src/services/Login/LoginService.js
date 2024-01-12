@@ -11,7 +11,7 @@ async function Login(email, password) {
                 'Content-Type': 'application/json',
             },
         });
-        localStorage.setItem("token", response.data)
+        localStorage.setItem("token", response.data.token)
 
         if (response.status === 200) {
             console.log('Login bem-sucedido');

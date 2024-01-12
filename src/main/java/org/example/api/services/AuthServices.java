@@ -56,7 +56,7 @@ public class AuthServices extends APIServer {
             if (PasswordHashing.checkPassword(userTryDTO.getPassword(), user.getSalt(), user.getPassword())) {
                 TokenDTO token = keyGenerator.generatorToken(userTryDTO.getEmail());
                 datastore.save(token);
-                return Response.ok(token.getToken()).build();
+                return Response.ok(token).build();
             } else {
                 return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid login").build();
             }
@@ -70,9 +70,9 @@ public class AuthServices extends APIServer {
     @Path("/token-verify")
     @Consumes ("application/json; charset=UTF-8")
     @Produces ("application/json; charset=UTF-8")
-    public Response expirationCheck(TokenDTO token){
+    public Response expirationCheck(@HeaderParam("Authorization") String token){
         Date currentTime = new Date();
-        Query<TokenDTO> query = datastore.createQuery(TokenDTO.class).field("token").equal(token.getToken());
+        Query<TokenDTO> query = datastore.createQuery(TokenDTO.class).field("token").equal(token);
         TokenDTO tokenInfos = query.get();
         if (tokenInfos == null){
             return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid token").build();

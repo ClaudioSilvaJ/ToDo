@@ -4,12 +4,16 @@ import axios from "axios";
 function TokenVerify() {
   const token = localStorage.getItem("token");
   if (token !== undefined && token !== null) {
-    const tokenDTO = { token: localStorage.getItem("token") };
-    return axios.post('http://localhost:8231/api/auth/token-verify', tokenDTO, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((response) => {
+    return axios.post(
+      'http://localhost:8231/api/auth/token-verify',
+      {},
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    ).then((response) => {
       if(response.status === 200){
         return Promise.resolve(true);
       } else {
