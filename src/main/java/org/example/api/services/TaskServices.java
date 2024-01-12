@@ -1,6 +1,7 @@
 package org.example.api.services;
 import org.example.APIServer;
 import org.example.dtos.TaskDTO;
+import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
@@ -71,4 +72,7 @@ public class TaskServices extends APIServer {
         return Response.status(Response.Status.NOT_FOUND).entity(tasks).build();
     }
 
+    public void setDatastore(Datastore datastore) {
+        APIServer.datastore = datastore;
+    }
 }
