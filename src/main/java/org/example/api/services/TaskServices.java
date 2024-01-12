@@ -6,8 +6,8 @@ import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Path("/user")
 public class TaskServices extends APIServer {
@@ -62,11 +62,10 @@ public class TaskServices extends APIServer {
     @GET
     @Path ("/task")
     @Produces("application/json; charset=UTF")
-    public Response getTask (){
-        List<String> tasks = datastore.createQuery(TaskDTO.class)
-                .asList().stream()
-                .map(TaskDTO::getName)
-                .collect(Collectors.toList());
+    public Response getTask (String owner){
+        List<TaskDTO> tasks = new ArrayList<>(datastore.createQuery(TaskDTO.class)
+                .field("owner").equal(owner)
+                .asList());
         if(!tasks.isEmpty()) return Response.status(Response.Status.OK).entity(tasks).build();
         return Response.status(Response.Status.NOT_FOUND).entity(tasks).build();
     }
