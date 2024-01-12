@@ -2,13 +2,15 @@ package com.todo.services;
 
 import static org.junit.Assert.assertEquals;
 import javax.ws.rs.core.Response;
+
+import com.todo.util.APIBaseTest;
 import org.example.dtos.LoginDTO;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.JVM)
-public class AuthServicesTest extends TodoMainTest {
+public class AuthServicesTest extends APIBaseTest {
 
     public String dummyEmail = "test@example.com";
     public String dummyPassword = "password123";

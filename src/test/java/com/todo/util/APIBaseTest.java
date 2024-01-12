@@ -1,6 +1,8 @@
-package com.todo.services;
+package com.todo.util;
 
+import org.example.APIServer;
 import org.example.api.services.AuthServices;
+import org.example.api.services.TaskServices;
 import org.example.configs.MorphiaConfig;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -10,12 +12,15 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mongodb.morphia.Datastore;
 
-public class TodoMainTest {
+public class APIBaseTest {
     @Mock
     private static Datastore mockDatastore;
 
     @InjectMocks
     public AuthServices authServices;
+
+    @InjectMocks
+    public TaskServices taskServices;
 
     @ClassRule
     public static ExternalResource externalResource = new ExternalResource() {
@@ -27,6 +32,6 @@ public class TodoMainTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         mockDatastore = new MorphiaConfig("MockDataBase").getDatastore();
-        authServices.setDatastore(mockDatastore);
+        APIServer.setDatastore(mockDatastore);
     }
 }

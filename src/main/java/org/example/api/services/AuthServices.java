@@ -4,7 +4,6 @@ import org.example.dtos.TokenDTO;
 import org.example.functions.PasswordHashing;
 import org.example.dtos.LoginDTO;
 import org.example.configs.TokenGenerator;
-import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import java.util.Date;
 
@@ -99,10 +98,6 @@ public class AuthServices extends APIServer {
         } catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity("Register error").build();
         }
-    }
-
-    public void setDatastore(Datastore datastore) {
-        APIServer.datastore = datastore;
     }
 
 }

@@ -37,6 +37,11 @@ public class APIServer {
         server.start();
         server.join();
     }
+
+    public static void setDatastore(Datastore datastore) {
+        APIServer.datastore = datastore;
+    }
+
     @SuppressWarnings("unused")
     public static void testhash() throws NoSuchAlgorithmException, InvalidKeySpecException {
         byte[] salt = PasswordHashing.generateSalt();
