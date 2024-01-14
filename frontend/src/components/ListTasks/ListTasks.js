@@ -1,12 +1,25 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CreateTaskPopup from "../CreateTaskPopup";
+import DashboardUser, {fetchTasks} from "../../views/commonUser/dashboardUser/DashboardUser";
+import axios from "axios";
 
-function ListTasks() {
-    const tasks = [
-        { name: "Task 1", state: "pending", obs: "-------" },
-        { name: "Task 2", state: "pending", obs: "-------" },
-        { name: "Task 3", state: "pending", obs: "-------" },
-    ];
+let i = 0;
+let arrayTasks= null;
+let tasks = [];
+
+function ListTasks(task) {
+
+    if (task.tasks !== null) {
+        while (i < task.tasks.length) {
+            arrayTasks = task.tasks[i]
+            tasks[i] = [
+                {name: arrayTasks.name, state: arrayTasks.state, obs: arrayTasks.obs},
+            ];
+            i++;
+        }
+    }
+    console.log(tasks)
+
     const [taskPopupShow, setTaskPopupShow] = useState(false);
     const [taskSelected, setTaskSelected] = useState();
 
@@ -21,6 +34,25 @@ function ListTasks() {
         }
     }
 
+    const listMapping =  task.tasks.map((task, index) => (
+        <tr className="text-center" key={index}>
+            <td>{task.name}</td>
+            <td>{task.state}</td>
+            <td>{task.obs}</td>
+            <td>
+                <button name="create" onClick={(event) => handleTask(event, task)} className="p-2 bg-green-200">
+                    Create
+                </button>
+                <button name="edit" onClick={(event) => handleTask(event, task)} className="p-2 bg-blue-200">
+                    Edit
+                </button>
+                <button name="delete" onClick={(event) => handleTask(event, task)} className="p-2 bg-red-200">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    ))
+
     return (
         <div className="flex flex-column justify-center items-center font-oswald">
             <h2 className="text-5xl mb-5">Tasks</h2>
@@ -33,27 +65,11 @@ function ListTasks() {
                 </tr>
                 </thead>
                 <tbody className="border">
-                {tasks.map((task, index) => (
-                    <tr className="text-center" key={index}>
-                        <td>{task.name}</td>
-                        <td>{task.state}</td>
-                        <td>{task.obs}</td>
-                        <td>
-                            <button name="create" onClick={(event) => handleTask(event, task)} className="p-2 bg-green-200">
-                                Create
-                            </button>
-                            <button name="edit" onClick={(event) => handleTask(event, task)} className="p-2 bg-blue-200">
-                                Edit
-                            </button>
-                            <button name="delete" onClick={(event) => handleTask(event, task)} className="p-2 bg-red-200">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                ))}
+                {listMapping}
                 </tbody>
             </table>
-            {taskPopupShow && <CreateTaskPopup onClose={() => setTaskPopupShow(!taskPopupShow)} onTaskSelected={taskSelected}/> }
+            {taskPopupShow &&
+                <CreateTaskPopup onClose={() => setTaskPopupShow(!taskPopupShow)} onTaskSelected={taskSelected}/>}
         </div>
     );
 }

@@ -65,9 +65,8 @@ public class TaskServices {
     @Path ("/task")
     @Produces("application/json; charset=UTF")
     public Response getTask (){
-        List<String> tasks = datastore.createQuery(TaskDTO.class)
+        List<TaskDTO> tasks = datastore.createQuery(TaskDTO.class)
                 .asList().stream()
-                .map(TaskDTO::getName)
                 .collect(Collectors.toList());
         if(!tasks.isEmpty()) return Response.status(Response.Status.OK).entity(tasks).build();
         return Response.status(Response.Status.NOT_FOUND).entity(tasks).build();

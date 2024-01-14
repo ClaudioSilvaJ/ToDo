@@ -17,6 +17,7 @@ public class AuthServices {
     TokenGenerator keyGenerator = new TokenGenerator();
     Datastore datastore = new MorphiaConfig().getDatastore();
 
+
     @POST
     @Path("/login")
     @Consumes("application/json; charset=UTF-8")
