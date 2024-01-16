@@ -9,16 +9,13 @@ let tasks = [];
 
 function ListTasks(task) {
 
-    if (task.tasks !== null) {
-        while (i < task.tasks.length) {
-            arrayTasks = task.tasks[i]
-            tasks[i] = [
-                {name: arrayTasks.name, state: arrayTasks.state, obs: arrayTasks.obs},
-            ];
-            i++;
-        }
+    while (i < task.tasks.length) {
+        arrayTasks = task.tasks[i]
+        tasks[i] = [
+            {name: arrayTasks.name, state: arrayTasks.state, obs: arrayTasks.obs},
+        ];
+        i++;
     }
-    console.log(tasks)
 
     const [taskPopupShow, setTaskPopupShow] = useState(false);
     const [taskSelected, setTaskSelected] = useState();
@@ -34,6 +31,17 @@ function ListTasks(task) {
         }
     }
 
+    function deleteTask(event, task){
+        console.log(task)
+        return axios.delete("http://localhost:8231/api/user/task/", {
+            name: task.name,
+            state: task.state,
+            obs: task.obs
+        }).then((response) => (
+            console.log(response)
+        ))
+    }
+
     const listMapping =  task.tasks.map((task, index) => (
         <tr className="text-center" key={index}>
             <td>{task.name}</td>
@@ -46,7 +54,7 @@ function ListTasks(task) {
                 <button name="edit" onClick={(event) => handleTask(event, task)} className="p-2 bg-blue-200">
                     Edit
                 </button>
-                <button name="delete" onClick={(event) => handleTask(event, task)} className="p-2 bg-red-200">
+                <button name="delete" onClick={(event) => deleteTask(event, task)} className="p-2 bg-red-200">
                     Delete
                 </button>
             </td>

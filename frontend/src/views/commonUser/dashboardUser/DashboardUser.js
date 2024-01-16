@@ -4,7 +4,7 @@ import {Logout} from "../../../services/Login/LoginService"
 import ListTasks from "../../../components/ListTasks/ListTasks";
 import axios from "axios";
 
-export async function fetchTasks(){
+async function fetchTasks(){
     return await axios.get("http://localhost:8231/api/user/task")
 }
 
@@ -26,6 +26,9 @@ function DashboardUser() {
         ))
     }, []);
 
+    if(!task || task.length === 0){
+        return <div className="flex justify-center items-center">Carregando...</div>
+    }
 
     return (
         <div className="flex flex-row h-screen">
