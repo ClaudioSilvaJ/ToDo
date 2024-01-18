@@ -45,7 +45,6 @@ function DashboardUser() {
                 <ListTasks tasks={task}/>
             </div>
         </div>
-
     );
 }
 
