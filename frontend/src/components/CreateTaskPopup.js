@@ -18,7 +18,8 @@ function CreateTaskPopup({ onClose, onTaskSelected={name: "", state: "", obs: ""
         return  axios.post("http://localhost:8231/api/user/task", {
             name: task.name,
             state: task.state,
-            obs: task.obs
+            obs: task.obs,
+            owner: localStorage.getItem("user")
         }).then(() => {
             window.location.reload();
         });

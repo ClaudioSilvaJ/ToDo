@@ -5,7 +5,10 @@ import ListTasks from "../../../components/ListTasks/ListTasks";
 import axios from "axios";
 
 async function fetchTasks(){
-    return await axios.get("http://localhost:8231/api/user/task")
+    console.log("fetching tasks")
+    console.log(JSON.stringify(localStorage.getItem("user")))
+    let url = `http://localhost:8231/api/user/task?owner=${localStorage.getItem("user")}`;
+    return await axios.get(url)
 }
 
 function DashboardUser() {
