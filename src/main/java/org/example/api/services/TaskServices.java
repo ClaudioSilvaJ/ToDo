@@ -61,12 +61,16 @@ public class TaskServices extends APIServer {
 
     @GET
     @Path ("/task")
+    @Consumes("application/json; charset=UTF")
     @Produces("application/json; charset=UTF")
     public Response getTask (String owner){
+        System.out.println("Entrou no get");
+        System.out.println(owner);
         List<TaskDTO> tasks = new ArrayList<>(datastore.createQuery(TaskDTO.class)
-                .field("owner").equal(owner)
+                .field("owner").equal("admin")
                 .asList());
         if(!tasks.isEmpty()) return Response.status(Response.Status.OK).entity(tasks).build();
-        return Response.status(Response.Status.NOT_FOUND).entity(tasks).build();
+        return Response.status(Response.Status.BAD_REQUEST).entity(tasks).build();
+
     }
 }

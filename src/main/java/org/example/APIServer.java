@@ -37,6 +37,7 @@ public class APIServer {
         server.start();
         server.join();
     }
+    @SuppressWarnings("unused")
 
     public static void setDatastore(Datastore datastore) {
         APIServer.datastore = datastore;
@@ -64,7 +65,6 @@ public class APIServer {
     public static void procura(Datastore datastore, LoginDTO login){
         Query<LoginDTO> query = datastore.createQuery(LoginDTO.class);
         query.field("email").equal("admin");
-        System.out.println(login);
         List<LoginDTO> resultados = query.asList();
         if (!resultados.isEmpty()) {
             System.out.println("Encontrado: O valor existe no campo 'campo1' em algum documento.");
